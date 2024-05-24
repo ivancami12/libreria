@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ListaLibrosController!{% endblock %}
+{% block title %}Lista de Libros!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,9 +9,9 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Lista de Libros! ✅</h1>
 
-    This friendly message is coming from:
+    Aqui estan los libros:
     
     <table>
         <thead>
@@ -22,12 +22,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for libros in libros %}
+            {% for book in libros %}
                 <tr>
-                    <td>{{ books.title }}</td>
-                    <td>{{ books.author }}</td>
-                    <td>{{ books.published_date }}</td>
-                </tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.publicado | date('d-m-Y') }}</td>
+                </tr>   
             {% endfor %}
         </tbody>
     </table>

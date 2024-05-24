@@ -17,14 +17,6 @@ class BooksRepository extends ServiceEntityRepository
     }
 
 
-    $entityManager = $this->getDoctrine()->getManager();
-    $query = $entityManager->createQuery(
-        'SELECT books
-        FROM App\Entity\Books.php books
-        ORDER BY books.*'
-    );
-    $products = $query->getResult();
-
 
     //    /**
     //     * @return Books[] Returns an array of Books objects

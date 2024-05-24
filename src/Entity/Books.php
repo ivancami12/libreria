@@ -23,7 +23,7 @@ class Books
     private ?string $author = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $published_date = null;
+    private ?\DateTimeInterface $publicado = null;
 
     #[ORM\Column]
     private ?int $isbn = null;
@@ -31,7 +31,7 @@ class Books
     /**
      * @var Collection<int, reviews>
      */
-    #[ORM\OneToMany(targetEntity: reviews::class, mappedBy: 'books', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'books', orphanRemoval: true)]
     private Collection $reviews;
 
     /**
@@ -82,14 +82,14 @@ class Books
         return $this;
     }
 
-    public function getPublishedDate(): ?\DateTimeInterface
+    public function getPublicado(): ?\DateTimeInterface
     {
-        return $this->published_date;
+        return $this->publicado;
     }
 
-    public function setPublishedDate(?\DateTimeInterface $published_date): static
+    public function setPublicado(?\DateTimeInterface $publicado): static
     {
-        $this->published_date = $published_date;
+        $this->publicado = $publicado;
 
         return $this;
     }
@@ -114,7 +114,7 @@ class Books
         return $this->reviews;
     }
 
-    public function addReview(reviews $review): static
+    public function addReview(Reviews $review): static
     {
         if (!$this->reviews->contains($review)) {
             $this->reviews->add($review);
@@ -124,7 +124,7 @@ class Books
         return $this;
     }
 
-    public function removeReview(reviews $review): static
+    public function removeReview(Reviews $review): static
     {
         if ($this->reviews->removeElement($review)) {
             // set the owning side to null (unless already changed)

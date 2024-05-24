@@ -2,7 +2,7 @@ CREATE TABLE reviews (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
     users_id INTEGER NOT NULL, 
     books_id INTEGER NOT NULL, 
-    published_date DATETIME DEFAULT NULL, 
+    publicado DATETIME DEFAULT NULL, 
     review_content VARCHAR(255) DEFAULT NULL, 
     CONSTRAINT FK_6970EB0F67B3B43D 
         FOREIGN KEY (users_id) 

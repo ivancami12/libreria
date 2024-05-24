@@ -17,4 +17,4 @@ INSERT INTO users (addresses_id, username, enabled)
 INSERT INTO users (addresses_id, username, enabled) 
     VALUES (9, "emma", 1);
 INSERT INTO users (addresses_id, username, enabled) 
-    VALUES (10, "maick", 0);
+    VALUES (10, maick, 0);

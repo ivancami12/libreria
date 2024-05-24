@@ -18,7 +18,7 @@ class Reviews
     private ?string $review_content = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $published_date = null;
+    private ?\DateTimeInterface $publicado = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
@@ -52,14 +52,14 @@ class Reviews
         return $this;
     }
 
-    public function getPublishedDate(): ?\DateTimeInterface
+    public function getPublicado(): ?\DateTimeInterface
     {
-        return $this->published_date;
+        return $this->publicado;
     }
 
-    public function setPublishedDate(?\DateTimeInterface $published_date): static
+    public function setPublicado(?\DateTimeInterface $publicado): static
     {
-        $this->published_date = $published_date;
+        $this->publicado = $publicado;
 
         return $this;
     }

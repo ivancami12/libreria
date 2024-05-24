@@ -3,5 +3,5 @@ CREATE TABLE books (
     title VARCHAR(100) DEFAULT NULL, 
     author VARCHAR(100) DEFAULT NULL, 
     isbn INTEGER NOT NULL, 
-    published_date DATETIME DEFAULT NULL
+    publicado DATETIME DEFAULT NULL
 );
