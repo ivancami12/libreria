@@ -2,39 +2,42 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
+use App\Repository\BooksRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UsersRepository::class)]
-class Users
+#[ORM\Entity(repositoryClass: BooksRepository::class)]
+class Books
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25, nullable: true)]
-    private ?string $username = null;
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $title = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $enabled = null;
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $author = null;
 
-    #[ORM\OneToOne(inversedBy: 'users', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?addresses $addresses = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $published_date = null;
+
+    #[ORM\Column]
+    private ?int $isbn = null;
 
     /**
      * @var Collection<int, reviews>
      */
-    #[ORM\OneToMany(targetEntity: reviews::class, mappedBy: 'users', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: reviews::class, mappedBy: 'books', orphanRemoval: true)]
     private Collection $reviews;
 
     /**
      * @var Collection<int, UsersBooks>
      */
-    #[ORM\OneToMany(targetEntity: UsersBooks::class, mappedBy: 'users', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UsersBooks::class, mappedBy: 'books', orphanRemoval: true)]
     private Collection $UsersBooks;
 
     public function __construct()
@@ -55,38 +58,50 @@ class Users
         return $this;
     }
 
-    public function getUsername(): ?string
+    public function getTitle(): ?string
     {
-        return $this->username;
+        return $this->title;
     }
 
-    public function setUsername(?string $username): static
+    public function setTitle(?string $title): static
     {
-        $this->username = $username;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function isEnabled(): ?bool
+    public function getAuthor(): ?string
     {
-        return $this->enabled;
+        return $this->author;
     }
 
-    public function setEnabled(?bool $enabled): static
+    public function setAuthor(?string $author): static
     {
-        $this->enabled = $enabled;
+        $this->author = $author;
 
         return $this;
     }
 
-    public function getAddresses(): ?addresses
+    public function getPublishedDate(): ?\DateTimeInterface
     {
-        return $this->addresses;
+        return $this->published_date;
     }
 
-    public function setAddresses(addresses $addresses): static
+    public function setPublishedDate(?\DateTimeInterface $published_date): static
     {
-        $this->addresses = $addresses;
+        $this->published_date = $published_date;
+
+        return $this;
+    }
+
+    public function getIsbn(): ?int
+    {
+        return $this->isbn;
+    }
+
+    public function setIsbn(int $isbn): static
+    {
+        $this->isbn = $isbn;
 
         return $this;
     }
@@ -103,7 +118,7 @@ class Users
     {
         if (!$this->reviews->contains($review)) {
             $this->reviews->add($review);
-            $review->setUsers($this);
+            $review->setBooks($this);
         }
 
         return $this;
@@ -113,8 +128,8 @@ class Users
     {
         if ($this->reviews->removeElement($review)) {
             // set the owning side to null (unless already changed)
-            if ($review->getUsers() === $this) {
-                $review->setUsers(null);
+            if ($review->getBooks() === $this) {
+                $review->setBooks(null);
             }
         }
 
@@ -133,7 +148,7 @@ class Users
     {
         if (!$this->UsersBooks->contains($usersBook)) {
             $this->UsersBooks->add($usersBook);
-            $usersBook->setUsers($this);
+            $usersBook->setBooks($this);
         }
 
         return $this;
@@ -143,8 +158,8 @@ class Users
     {
         if ($this->UsersBooks->removeElement($usersBook)) {
             // set the owning side to null (unless already changed)
-            if ($usersBook->getUsers() === $this) {
-                $usersBook->setUsers(null);
+            if ($usersBook->getBooks() === $this) {
+                $usersBook->setBooks(null);
             }
         }
 
