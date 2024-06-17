@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista de Libros!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #42CBF5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+    <h1>Lista de nombre!</h1>
+    Nombres de usuarios que no han entregado libro:
+    <br>
+    <h1>{{ cantidad_libros }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Fecha de prestamo</th>  
+                <th>Dias de atraso</th>
+                  <th>Nombre</th>    
+            </tr>
+        </thead>
+        <br>
+        <tbody>
+            {% for prestamo in prestamos_vencidos %}
+                <tr>
+                    <td>{{ prestamo.books.title }}</td>
+                    <td>{{ prestamo.books.author }}</td>
+                    <td>{{ prestamo.checkaoutDate | date('d-m-Y') }}</td>
+                    <td>{{ date('now').diff(prestamo.checkaoutDate )|date("%a") - 7 }}</td> 
+                    <td>{{ prestamo.users.username }}</td>
+                </tr>   
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div>
+{% for cantidad in cantidad_libros %}
+    {{ dump(cantidad) }}
+{% endfor %}    
+{% endblock %}

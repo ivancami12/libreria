@@ -23,12 +23,12 @@ class Users
 
     #[ORM\OneToOne(inversedBy: 'users', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?addresses $addresses = null;
+    private ?Addresses $addresses = null;
 
     /**
      * @var Collection<int, reviews>
      */
-    #[ORM\OneToMany(targetEntity: reviews::class, mappedBy: 'users', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'users', orphanRemoval: true)]
     private Collection $reviews;
 
     /**
@@ -79,12 +79,12 @@ class Users
         return $this;
     }
 
-    public function getAddresses(): ?addresses
+    public function getAddresses(): ?Addresses
     {
         return $this->addresses;
     }
 
-    public function setAddresses(addresses $addresses): static
+    public function setAddresses(Addresses $addresses): static
     {
         $this->addresses = $addresses;
 
@@ -99,7 +99,7 @@ class Users
         return $this->reviews;
     }
 
-    public function addReview(reviews $review): static
+    public function addReview(Reviews $review): static
     {
         if (!$this->reviews->contains($review)) {
             $this->reviews->add($review);
@@ -109,7 +109,7 @@ class Users
         return $this;
     }
 
-    public function removeReview(reviews $review): static
+    public function removeReview(Reviews $review): static
     {
         if ($this->reviews->removeElement($review)) {
             // set the owning side to null (unless already changed)

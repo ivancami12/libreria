@@ -1,8 +1,9 @@
+DROP TABLE users_books;
 CREATE TABLE users_books (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
     users_id INTEGER NOT NULL, 
     books_id INTEGER NOT NULL, 
-    checkaout_date DATETIME DEFAULT NULL,
+    checkout_date DATETIME DEFAULT NULL,
     return_date DATETIME DEFAULT NULL, 
     CONSTRAINT FK_AD6C8EDB67B3B43D 
         FOREIGN KEY (users_id) 

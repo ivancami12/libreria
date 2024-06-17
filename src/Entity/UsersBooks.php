@@ -16,7 +16,7 @@ class UsersBooks
 
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $checkaout_date = null;
+    private ?\DateTimeInterface $checkout_date = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $return_date = null;
@@ -36,12 +36,12 @@ class UsersBooks
 
     public function getCheckaoutDate(): ?\DateTimeInterface
     {
-        return $this->checkaout_date;
+        return $this->checkout_date;
     }
 
-    public function setCheckaoutDate(?\DateTimeInterface $checkaout_date): static
+    public function setCheckaoutDate(?\DateTimeInterface $checkout_date): static
     {
-        $this->checkaout_date = $checkaout_date;
+        $this->checkout_date = $checkout_date;
 
         return $this;
     }
