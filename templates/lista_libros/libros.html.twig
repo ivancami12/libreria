@@ -3,44 +3,86 @@
 {% block title %}Lista de Libros!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #42CBF5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-
-    <h1>Lista de nombre!</h1>
-    Nombres de usuarios que no han entregado libro:
+<div class="container">
+    <div class="card custom-card" style="   max-width: 200px; 
+                                            border: 7px solid #7489FD; 
+                                            text-align: center;
+                                            position: absolute;
+                                            bottom: 70%;">
+        <h4>total de libros</h4>
+        <h1>{{ cantidad_libros }}</h1>   
+    </div>
     <br>
-    <h1>{{ cantidad_libros }}</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Titulo</th>
-                <th>Autor</th>
-                <th>Fecha de prestamo</th>  
-                <th>Dias de atraso</th>
-                  <th>Nombre</th>    
-            </tr>
-        </thead>
-        <br>
-        <tbody>
-            {% for prestamo in prestamos_vencidos %}
-                <tr>
-                    <td>{{ prestamo.books.title }}</td>
-                    <td>{{ prestamo.books.author }}</td>
-                    <td>{{ prestamo.checkaoutDate | date('d-m-Y') }}</td>
-                    <td>{{ date('now').diff(prestamo.checkaoutDate )|date("%a") - 7 }}</td> 
-                    <td>{{ prestamo.users.username }}</td>
-                </tr>   
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="custum">
+        <div class="card-body" style="  width: 820px;
+                                        height: 500px;
+                                        background-color: #f4f4f4;
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0; 
+                                        margin: 50px;
+                                        ">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="vencidos-tab" data-bs-toggle="tab" href="#vencidos" role="tab" aria-controls="vencidos" aria-selected="true">vencidos</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="disgusto-tab" data-bs-toggle="tab" href="#disgusto" role="tab" aria-controls="disgusto" aria-selected="false">No deseados</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="prestado-tab" data-bs-toggle="tab" href="#prestado" role="tab" aria-controls="prestado" aria-selected="false">Prestados</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent" style="width: 800px;">
+                <div class="tab-pane fade show active" id="vencidos" role="tabpanel" aria-labelledby="vencidos-tab">
+                    <div class="card custom-card">
+                        <div class="card-header custom-card-header">
+                            <h1>Nombres</h1>           
+                        </div>
+                        <div class="card-body custom-card-body">
+                            <p>Lista de los libros:</p>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Titulo</th>
+                                            <th>Autor</th>
+                                            <th>Fecha de prestamo</th>  
+                                            <th>Dias de atraso</th>
+                                            <th>Nombre</th>    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for prestamo in prestamos_vencidos %}
+                                            <tr>
+                                                <td>{{ prestamo.books.title }}</td>
+                                                <td>{{ prestamo.books.author }}</td>
+                                                <td>{{ prestamo.checkaoutDate | date('d-m-Y') }}</td>
+                                                <td>{{ date('now').diff(prestamo.checkaoutDate )|date("%a") - 7 }}</td> 
+                                                <td>{{ prestamo.users.username }}</td>
+                                            </tr>   
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="disgusto" role="tabpanel" aria-labelledby="disgusto-tab">
+                    <b>
+                        Libros que estan en presamo
+                    </b>
+                </div>
+                <div class="tab-pane fade" id="prestado" role="tabpanel" aria-labelledby="prestado-tab">
+                    <b>
+                        Libros que estan en presamo
+                    </b>       
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div>
-{% for cantidad in cantidad_libros %}
-    {{ dump(cantidad) }}
-{% endfor %}    
+ 
 {% endblock %}
+
+              

@@ -32,13 +32,11 @@ class ListaLibrosController extends AbstractController
 
         $prestamos_vencidos = $this->consultar_libros_vencidos($doctrine->getManager());
         $relacion = $this->cantidad_libros($doctrine->getManager());
-        $descripcion = $this->descripcion_usuario($doctrine->getManager());
 
         return $this->render('lista_libros/libros.html.twig', [
             'controller_name' => 'ListaLibrosController',
             'prestamos_vencidos' => $prestamos_vencidos,
-            'cantidad_libros'=> $relacion,
-            'descripcion_usuario'=> $descripcion
+            'cantidad_libros'=> $relacion
         ]);
     }
 
