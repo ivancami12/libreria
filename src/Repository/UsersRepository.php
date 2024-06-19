@@ -3,7 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Users;
+use App\Entity\Books;
+use App\Entity\Addresses;
+use App\Entity\UsersBooks;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\LockMode;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -15,6 +19,12 @@ class UsersRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Users::class);
     }
+
+
+
+
+
+
 
     //    /**
     //     * @return Users[] Returns an array of Users objects

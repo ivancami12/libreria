@@ -59,7 +59,7 @@
                                                 <td>{{ prestamo.books.author }}</td>
                                                 <td>{{ prestamo.checkaoutDate | date('d-m-Y') }}</td>
                                                 <td>{{ date('now').diff(prestamo.checkaoutDate )|date("%a") - 7 }}</td> 
-                                                <td>{{ prestamo.users.username }}</td>
+                                                <td><a href="#" onclick="cargarContenidoVencidos({{ prestamo.id}}); return false;">{{ prestamo.users.username }}</a></td>
                                             </tr>   
                                         {% endfor %}
                                     </tbody>
@@ -79,10 +79,69 @@
                     </b>       
                 </div>
             </div>
+            <div id="detalle_vencidos" style="  display: none;
+                                                justify-content: flex-end; /* Alinea el contenido al final (derecha) horizontalmente */
+                                                align-items: center; /* Centra el contenido verticalmente */
+                                                height: 100vh; ">
+                <p>Descripción del prestamo:</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Atributo</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>username</td>
+                        <td id="username">Fila 1, Celda 2</td>
+                    </tr>
+                    <tr>
+                        <td>street</td>
+                        <td id="street">Fila 1, Celda 2</td>
+                    </tr>
+                    <tr>
+                        <td>state</td>
+                        <td id="state">Fila 2, Celda 2</td>
+                    </tr>
+                    <tr>
+                        <td>title</td>
+                        <td id="title">Fila 3, Celda 2</td>
+                    </tr>
+                    <tr>
+                        <td>author</td>
+                        <td id="author">Fila 4, Celda 2</td>
+                    </tr>
+                    <tr>
+                        <td>checkout_date</td>
+                        <td id="checkout_date">Fila 5, Celda 2</td>
+                    </tr>
+                </tbody>
+            </table>
+               
+            </div>
         </div>
     </div>
 </div>
- 
+
+ <script>
+  function cargarContenidoVencidos(id){
+    document.getElementById('detalle_vencidos').style.display = 'block';
+    axios.get('/vencidos/'+id)
+        .then(response => {
+            jsonString = JSON.parse(response.data);
+            console.log(jsonString);
+            document.getElementById('username').textContent = jsonString.username;
+            document.getElementById('street').textContent = jsonString.street;
+            document.getElementById('state').textContent = jsonString.state;
+            document.getElementById('title').textContent = jsonString.title;
+            document.getElementById('author').textContent = jsonString.author;
+            document.getElementById('checkout_date').textContent = new Date(jsonString.checkout_date.date).toLocaleDateString();
+        })
+        .catch(error => console.error('Error:', error));
+  }
+ </script>
+
 {% endblock %}
 
               
