@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}index{% endblock %}
+
+{% block body_left %}
+    <div class="container mt-5">
+        <div class="card custom-card"  style=" background: #e8e9ec;
+                                                            height: 700px;
+                                                            overflow-y: scroll;
+                                                            width: 650px;">
+            <div class="card-header custom-card-header">
+                <h1>Lista de Libros! ✅</h1>           
+            </div>
+            <div class="card-body custom-card-body">
+                <p>Aquí están los libros:</p>
+                <div class="table-responsive">
+                   <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Título</th>
+                                <th>Autor</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in libros %}
+                                <tr>
+                                    <td>{{ book.title }}</td>
+                                    <td>{{ book.author }}</td>
+                                    <td><a href="#" onclick="cargarContenidoVencidos( {{ book.publicado | date('d-m-Y') }} ); return false;">{{ book.publicado | date('d-m-Y') }}</a>                                   
+                                </tr>   
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block body_right %}
+    <div class="cja" id="detalle_vencidos" style=" display: none;">
+        <table class="table table-bordered" style="background-color: #b5c0fa  ">
+            <thead class="table-light">
+                <tr>
+                    <th>Atributo</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="title">Fila 1, Celda 2</td>
+                </tr>
+                <tr>
+                    <td id="checkout_date">Fila 1, Celda 2</td>
+                </tr>
+            </tbody>           
+        </table>               
+    </div> ->
+{% endblock %}
+
+
+{% block javascripts %}
+<script>
+
+</script>
+{% endblock %}
+

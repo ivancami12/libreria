@@ -34,3 +34,15 @@ INSERT INTO books (title, author, isbn, publicado)
     VALUES ( "El amor no duele", "Montse Barderi", 16,"2016");
 INSERT INTO books (title, author, isbn, publicado)
     VALUES ( "El bosque de los susurros", "Aníbal Plazas", 17,"2006");
+INSERT INTO books (title, author, isbn, publicado)
+    VALUES ("El resplandor", "Stephen King", 18,"1977");
+INSERT INTO books (title, author, isbn, publicado)
+    VALUES ("it", "Stephen King", 19,"1986");
+INSERT INTO books (title, author, isbn, publicado)
+    VALUES ("Cementerio de animales", "Stephen King", 20,"1983");
+INSERT INTO books (title, author, isbn, publicado)
+    VALUES ("El planeta de los simios", "Pierre Boulle", 21, "1963");
+INSERT INTO books (title, author, isbn, publicado) 
+    VALUES ("El último hombre", "Mary Shelley", 22, "1826");
+INSERT INTO books (title, author, isbn, publicado)
+    VALUES ("Estación Once", "Emily St. Madel", 23, "2014");

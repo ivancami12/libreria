@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-class InterfazUsuarioController extends AbstractController
+class ClienteController extends AbstractController
 {
     #[Route('/interfaz/usuario', name: 'app_interfaz_usuario')]
     public function index(): JsonResponse

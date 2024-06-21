@@ -9,15 +9,15 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Books;
 
-class ListaLibrosController extends AbstractController
+class BibliotecarioController extends AbstractController
 {
-    #[Route('libros', name: 'app_lista_libros')]
+    #[Route('', name: 'app_lista_libros')]
     public function index(ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
         $libros = $entityManager->getRepository(Books::class)->FindAll();
-        return $this->render('lista_libros/index.html.twig', [
-            'controller_name' => 'ListaLibrosController',
+        return $this->render('bibliotecario/books.twig', [
+            'controller_name' => 'BibliotecarioController',
             'libros' => $libros
         ]);
     }
@@ -29,8 +29,8 @@ class ListaLibrosController extends AbstractController
 
         $prestamos_vencidos = $this->consultar_libros_vencidos($doctrine->getManager());
         $relacion = $this->cantidad_libros($doctrine->getManager());
-        return $this->render('lista_libros/libros.html.twig', [
-            'controller_name' => 'ListaLibrosController',
+        return $this->render('bibliotecario/dashboard.twig', [
+            'controller_name' => 'BibliotecarioController',
             'prestamos_vencidos' => $prestamos_vencidos,
             'cantidad_libros'=> $relacion
         ]);

@@ -45,3 +45,11 @@
 .table-striped {
     background-color: aliceblue;
 }
+
+.cja {
+    display: none;
+    display: flex;
+    justify-content: flex-end; /* Alinea el contenido al final (derecha) horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    height: 100em
+}

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" style="background-color: #0df058;">   
+        <div class="col" style=" background-color: red;">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Navbar</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link" href="#">Features</a>
+                            <a class="nav-link" href="#">Pricing</a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>                    
+        </div>
+    </div>
+    <div class="row" style="background-color: #1489b8;">
+        <div class="col-4">
+            <div class="card card-body" style="
+                                                    width: 240px; 
+                                                    background-color: #b9e9f0;
+                                                    border: 5px solid #659bd8 ; 
+                                                    text-align: center;
+                                                    position: center;
+                                                ">
+                <h1>
+                    {{ cantidad_libros}}
+                    <br>
+                    Cantidad De Libros
+                </h1>
+            </div>
+        </div>
+    </div>
+        <div class="row" style="background-color: #65d88b;">
+        <div class="col">
+            <div class="custum">
+                <div class="card-body" style="  width: 1800px;
+                                                height: 1000px;
+                                                height: 65%;        
+                                                position: absolute;
+                                                bottom: 0;
+                                                left: 0; 
+                                                margin: 1em;
+                                                ">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="vencidos-tab" data-bs-toggle="tab" href="#vencidos" role="tab" aria-controls="vencidos" aria-selected="true">vencidos</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="disgusto-tab" data-bs-toggle="tab" href="#disgusto" role="tab" aria-controls="disgusto" aria-selected="false">No deseados</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="prestado-tab" data-bs-toggle="tab" href="#prestado" role="tab" aria-controls="prestado" aria-selected="false">Prestados</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent" style="width: 900px;">
+                        <div class="tab-pane fade show active" id="vencidos" role="tabpanel" aria-labelledby="vencidos-tab">
+                            <div class="card custom-card">
+                                <div class="card-header custom-card-header">
+                                    <h1>Nombres</h1>           
+                                </div>
+                                <div class="card-body custom-card-body">
+                                    <p>Lista de los libros:</p>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Titulo</th>
+                                                    <th>Autor</th>
+                                                    <th>Fecha de prestamo</th>  
+                                                    <th>Dias de atraso</th>
+                                                    <th>Nombre</th>    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for prestamo in prestamos_vencidos %}
+                                                    <tr>
+                                                        <td>{{ prestamo.books.title }}</td>
+                                                        <td>{{ prestamo.books.author }}</td>
+                                                        <td>{{ prestamo.checkaoutDate | date('d-m-Y') }}</td>
+                                                        <td>{{ date('now').diff(prestamo.checkaoutDate )|date("%a") - 7 }}</td> 
+                                                        <td><a href="#" onclick="cargarContenidoVencidos({{ prestamo.id}}); return false;">{{ prestamo.users.username }}</a></td>
+                                                    </tr>   
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="disgusto" role="tabpanel" aria-labelledby="disgusto-tab">
+                            <b>
+                                Libros que estan en presamo
+                            </b>
+                        </div>
+                        <div class="tab-pane fade" id="prestado" role="tabpanel" aria-labelledby="prestado-tab">
+                            <b>
+                                Libros que estan en presamo
+                            </b>       
+                        </div>
+                    </div>
+                    <div class="cja" id="detalle_vencidos" style="  display: none;
+                                                                    width: 45%;
+                                                                    float: right;
+                                                                    background-color: #b5c0fa ;
+                                                                    padding: 20px;
+                                                                    position: center;
+                                                                    border: 20px solid #97a6fb ;">
+                        <p>Descripción del prestamo:</p>       
+                        <table class="table table-bordered" style="background-color: #b5c0fa  ">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Atributo</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nombre de usuario</td>
+                                    <td id="username">Fila 1, Celda 2</td>
+                                </tr>
+                                <tr>
+                                    <td>Direccion</td>
+                                    <td id="street">Fila 1, Celda 2</td>
+                                </tr>
+                                <tr>
+                                    <td>Localidad</td>
+                                    <td id="state">Fila 2, Celda 2</td>
+                                </tr>
+                                <tr>
+                                    <td>Titulo del libro</td>
+                                    <td id="title">Fila 3, Celda 2</td>
+                                </tr>
+                                <tr>
+                                    <td>Autor</td>
+                                    <td id="author">Fila 4, Celda 2</td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha de retardo</td>
+                                    <td id="checkout_date">Fila 5, Celda 2</td>
+                                </tr> 
+                                    <td>Enviar Email</td>
+                                    <td><button class="btn btn-light">Enviar correo electronico</button></td>
+                                </tr>
+                            </tbody>           
+                        </table>               
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    
+</body>
+</html>
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista de Libros!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card card-body" style="    width: 370px; 
+                                        height: 1em auto;
+                                        background-color: #b9e9f0;
+                                        border: 5px solid #659bd8 ; 
+                                        text-align: center;
+                                        position: center;
+                                        bottom: 0;
+                                        bottom: 70%;">
+        <h1>{{ cantidad_libros }} <br>
+         cantidad de libros</h1>    
+    </div>
+    <br>
+    <div class="custum">
+        <div class="card-body" style="  width: 1800px;
+                                        height: 1000px;
+                                        height: 65%;        
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0; 
+                                        margin: 1em;
+                                        ">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="vencidos-tab" data-bs-toggle="tab" href="#vencidos" role="tab" aria-controls="vencidos" aria-selected="true">vencidos</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="disgusto-tab" data-bs-toggle="tab" href="#disgusto" role="tab" aria-controls="disgusto" aria-selected="false">No deseados</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="prestado-tab" data-bs-toggle="tab" href="#prestado" role="tab" aria-controls="prestado" aria-selected="false">Prestados</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent" style="width: 900px;">
+                <div class="tab-pane fade show active" id="vencidos" role="tabpanel" aria-labelledby="vencidos-tab">
+                    <div class="card custom-card">
+                        <div class="card-header custom-card-header">
+                            <h1>Nombres</h1>           
+                        </div>
+                        <div class="card-body custom-card-body">
+                            <p>Lista de los libros:</p>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Titulo</th>
+                                            <th>Autor</th>
+                                            <th>Fecha de prestamo</th>  
+                                            <th>Dias de atraso</th>
+                                            <th>Nombre</th>    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for prestamo in prestamos_vencidos %}
+                                            <tr>
+                                                <td>{{ prestamo.books.title }}</td>
+                                                <td>{{ prestamo.books.author }}</td>
+                                                <td>{{ prestamo.checkaoutDate | date('d-m-Y') }}</td>
+                                                <td>{{ date('now').diff(prestamo.checkaoutDate )|date("%a") - 7 }}</td> 
+                                                <td><a href="#" onclick="cargarContenidoVencidos({{ prestamo.id}}); return false;">{{ prestamo.users.username }}</a></td>
+                                            </tr>   
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="disgusto" role="tabpanel" aria-labelledby="disgusto-tab">
+                    <b>
+                        Libros que estan en presamo
+                    </b>
+                </div>
+                <div class="tab-pane fade" id="prestado" role="tabpanel" aria-labelledby="prestado-tab">
+                    <b>
+                        Libros que estan en presamo
+                    </b>       
+                </div>
+            </div>
+            <div class="cja" id="detalle_vencidos" style="  display: none;
+                                                            width: 45%;
+                                                            float: right;
+                                                            background-color: #b5c0fa ;
+                                                            padding: 20px;
+                                                            position: center;
+                                                            border: 20px solid #97a6fb ;">
+                <p>Descripción del prestamo:</p>
+
+                <table class="table table-bordered" style="background-color: #b5c0fa  ">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Atributo</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nombre de usuario</td>
+                            <td id="username">Fila 1, Celda 2</td>
+                        </tr>
+                        <tr>
+                            <td>Direccion</td>
+                            <td id="street">Fila 1, Celda 2</td>
+                        </tr>
+                        <tr>
+                            <td>Localidad</td>
+                            <td id="state">Fila 2, Celda 2</td>
+                        </tr>
+                        <tr>
+                            <td>Titulo del libro</td>
+                            <td id="title">Fila 3, Celda 2</td>
+                        </tr>
+                        <tr>
+                            <td>Autor</td>
+                            <td id="author">Fila 4, Celda 2</td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de retardo</td>
+                            <td id="checkout_date">Fila 5, Celda 2</td>
+                        </tr> 
+                            <td>Enviar Email</td>
+                            <td><button class="btn btn-light">Enviar correo electronico</button></td>
+                        </tr>
+                    </tbody>           
+                </table>               
+            </div>
+
+        </div>
+    </div>
+</div>
+ <script>
+  function cargarContenidoVencidos(id){
+    document.getElementById('detalle_vencidos').style.display = 'block';
+    axios.get('/vencidos/'+id)
+        .then(response => {
+            jsonString = JSON.parse(response.data);
+            console.log(jsonString);
+            document.getElementById('username').textContent = jsonString.username;
+            document.getElementById('street').textContent = jsonString.street;
+            document.getElementById('state').textContent = jsonString.state;
+            document.getElementById('title').textContent = jsonString.title;
+            document.getElementById('author').textContent = jsonString.author;
+            document.getElementById('checkout_date').textContent = new Date(jsonString.checkout_date.date).toLocaleDateString();
+        })
+        .catch(error => console.error('Error:', error));
+  }
+ </script>
+
+{% endblock %}
