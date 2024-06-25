@@ -2,18 +2,18 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Books;
 
+
 class BibliotecarioController extends AbstractController
 {
-    #[Route('', name: 'app_lista_libros')]
+    #[Route('/', name: 'app_lista_libros')]
     public function index(ManagerRegistry $doctrine): Response
-    {
+    { 
         $entityManager = $doctrine->getManager();
         $libros = $entityManager->getRepository(Books::class)->FindAll();
         return $this->render('bibliotecario/books.twig', [
@@ -21,7 +21,31 @@ class BibliotecarioController extends AbstractController
             'libros' => $libros
         ]);
     }
+
+    #[Route('/libros/{id}',  name: 'app_prestamos')]
+    public function prestamos(ManagerRegistry $doctrine, $id): Response
+    {
+        $numero_prestamos = $this->consultar_prestamos($doctrine->getManager(), $id);
+        return new JsonResponse($numero_prestamos);
+    }
     
+    private function consultar_prestamos($entityManager, $id){
+        $query = $entityManager->createQuery(
+            "SELECT u.username,
+                    b.title,
+                    ub.checkout_date,
+                    ub.return_date       
+            FROM App\Entity\UsersBooks ub
+            LEFT JOIN App\Entity\Users u 
+                WITH	ub.users = u
+            LEFT JOIN App\Entity\Books b 
+                WITH	ub.books = b
+            WHERE b.id = :id
+            ");
+        $query->setParameter('id', $id);
+        return json_encode($query->getResult());
+    }
+
     #[Route('vencidos', name: 'app_libros_vencidos')]
     public function lista(ManagerRegistry $doctrine): Response
     {
@@ -61,7 +85,7 @@ class BibliotecarioController extends AbstractController
     }
     
     #[Route('vencidos/{id}',  name: 'app_descripcion')]
-    public function descri(ManagerRegistry $doctrine, $id): Response
+    public function descripcion(ManagerRegistry $doctrine, $id): Response
     {
         $descripcion = $this->descripcion_usuarios($doctrine->getManager(), $id);
         return new JsonResponse($descripcion);

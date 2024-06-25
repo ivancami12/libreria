@@ -37,34 +37,32 @@
                     <h1>Nombres</h1>           
                 </div>
                 <div class="card-body custom-card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Titulo</th>
+                                    <th>Autor</th>
+                                    <th>Fecha de prestamo</th>  
+                                    <th>Dias de atraso</th>
+                                    <th>Nombre</th>    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for prestamo in prestamos_vencidos %}
                                     <tr>
-                                        <th>listado</th>
-                                        <th>Titulo</th>
-                                        <th>Autor</th>
-                                        <th>Fecha de prestamo</th>  
-                                        <th>Dias de atraso</th>
-                                        <th>Nombre</th>    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for prestamo in prestamos_vencidos %}
-                                        <tr>
-                                            <th></th>
-                                            <td>{{ prestamo.books.title }}</td>
-                                            <td>{{ prestamo.books.author }}</td>
-                                            <td>{{ prestamo.checkaoutDate | date('d-m-Y') }}</td>
-                                            <td>{{ date('now').diff(prestamo.checkaoutDate )|date("%a") - 7 }}</td> 
-                                            <td><a href="#" onclick="cargarContenidoVencidos({{ prestamo.id}}); return false;">{{ prestamo.users.username }}</a></td>
-                                        </tr>   
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                                        <td>{{ prestamo.books.title }}</td>
+                                        <td>{{ prestamo.books.author }}</td>
+                                        <td>{{ prestamo.checkaoutDate | date('d-m-Y') }}</td>
+                                        <td>{{ date('now').diff(prestamo.checkaoutDate )|date("%a") - 7 }}</td> 
+                                        <td><a href="#" onclick="cargarContenidoVencidos({{ prestamo.id}}); return false;">{{ prestamo.users.username }}</a></td>
+                                    </tr>   
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-        </div>
+            </div>
         <div class="tab-pane fade" id="disgusto" role="tabpanel" aria-labelledby="disgusto-tab">
             <b>
                 Libros que estan en presamo

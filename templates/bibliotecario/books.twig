@@ -1,71 +1,92 @@
 {% extends 'base.html.twig' %}
 
 
-
 {% block title %}index{% endblock %}
 
 {% block body_left %}
     <div class="container mt-5">
-        <div class="card custom-card"  style=" background: #e8e9ec;
-                                                            height: 700px;
-                                                            overflow-y: scroll;
-                                                            width: 650px;">
-            <div class="card-header custom-card-header">
-                <h1>Lista de Libros! ✅</h1>           
-            </div>
-            <div class="card-body custom-card-body">
-                <p>Aquí están los libros:</p>
-                <div class="table-responsive">
-                   <table class="table table-striped">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Título</th>
-                                <th>Autor</th>
-                                <th>Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for book in libros %}
-                                <tr>
-                                    <td>{{ book.title }}</td>
-                                    <td>{{ book.author }}</td>
-                                    <td><a href="#" onclick="cargarContenidoVencidos( {{ book.publicado | date('d-m-Y') }} ); return false;">{{ book.publicado | date('d-m-Y') }}</a>                                   
-                                </tr>   
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                                <div class="card custom-cargarPrestamos"  style="   background:  #e8e9ec;
+                                                                                    height: 700px;
+                                                                                    overflow-y: scroll;
+                                                                                    width: 650px;">
+                                    <div class="card-header custom-card-header">
+                                        <h1>Lista de Libros! ✅</h1>           
+                                    </div>
+                                    <div class="card-body custom-card-body">
+                                        <p>Aquí están los libros:</p>
+                                        <div class="table-responsive">
+                                        <table class="table table-striped">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Título</th>
+                                                        <th>Autor</th>
+                                                        <th>Fecha</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for book in libros %}
+                                                        <tr>
+                                                            <td >{{ book.title}}</td>
+                                                            <td>{{ book.author }}</td>
+                                                            <td><a href="#" onclick="cargarPrestamos( {{ book.id }} ); return false;">{{ book.publicado | date('d-m-Y') }}</a>                                   
+                                                        </tr>   
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
     </div>
 {% endblock %}
 
 
 {% block body_right %}
-    <div class="cja" id="detalle_vencidos" style=" display: none;">
-        <table class="table table-bordered" style="background-color: #b5c0fa  ">
+    <div id="prestamos" style=" display: none;">
+        <table id="tablaRegistros" class="table table-striped table-bordered style="background-color: #b5c0fa  ">
             <thead class="table-light">
                 <tr>
-                    <th>Atributo</th>
-                    <th>Valor</th>
+                    <th>nombre usuario</th>
+                    <th>Titulo del libro</th>
+                    <th>Fechas</th>
+                    <th>Fechas</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td id="title">Fila 1, Celda 2</td>
-                </tr>
-                <tr>
-                    <td id="checkout_date">Fila 1, Celda 2</td>
-                </tr>
+
             </tbody>           
         </table>               
-    </div> ->
+    </div>
 {% endblock %}
 
 
 {% block javascripts %}
-<script>
+    <script>
+    function cargarPrestamos(id){
+        console.log(id);
+        table = document.getElementById('tablaRegistros');
 
-</script>
+        while (table.rows.length > 1) {
+            table.deleteRow(1);
+        }
+        
+        document.getElementById('prestamos').style.display = 'block';
+        axios.get('/libros/'+id)
+        .then(response => {
+                console.log(response.data);
+                array_response = JSON.parse(response.data);
+                if (array_response.length == 0){
+                    console.log('arreglo vacio');
+                }else{
+                    console.log('arreglo NO vacio');
+                    console.log(array_response.length)
+                    for (i = 0; i < array_response.length; i++) {
+                        console.log(array_response[i].username);
+                        newRow = table.insertRow();
+                        newRow.insertCell(0).innerHTML = array_response[i].username;
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+ </script>
 {% endblock %}
-
